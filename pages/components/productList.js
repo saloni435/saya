@@ -84,7 +84,7 @@ const ProductList = () => {
   <div className="container py-5">
     <div className="row">
         {devices.map(device=>{
-            return <Product device={device}/>
+            return <Product device={device} key={device.id}/>
         })}
       
     </div>
