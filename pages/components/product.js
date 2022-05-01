@@ -3,10 +3,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const Product = props => {
   return (
-        <div className="col-md-12 col-lg-4 mb-4 mb-lg-0">
+        <div className="col-md-12 col-lg-4 mb-4 mb-lg-0" key={props.device.id}>
         <div className="card">
           <div className="d-flex justify-content-between p-3">
-            <p className="lead mb-0">Today's Combo Offer</p>
+            <p className="lead mb-0">Todays Combo Offer</p>
             <div
               className="bg-info rounded-circle d-flex align-items-center justify-content-center shadow-1-strong"
               style={{width:"35px",height:"35px"}}>
@@ -37,7 +37,7 @@ const Product = props => {
               </div>
               <div className="d-flex justify-content-between mb-2">
                     <button type="button" className="btn btn-primary" onClick={()=>{
-                        
+
                     }}>Add to Cart</button>
             </div>
             </div>

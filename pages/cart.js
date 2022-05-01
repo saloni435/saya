@@ -30,7 +30,7 @@ const Cart = props => {
                       </div>
                       <div className="col-md-3 col-lg-3 col-xl-2 d-flex">
                         <button className="btn btn-link px-2"
-                          onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                          onClick="this.parentNode.querySelector('input[type=number]').stepDown()">
                           <i className="fas fa-minus"></i>
                         </button>
   
@@ -38,7 +38,7 @@ const Cart = props => {
                           className="form-control form-control-sm" />
   
                         <button className="btn btn-link px-2"
-                          onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                          onClick="this.parentNode.querySelector('input[type=number]').stepUp()">
                           <i className="fas fa-plus"></i>
                         </button>
                       </div>
@@ -64,7 +64,7 @@ const Cart = props => {
                       </div>
                       <div className="col-md-3 col-lg-3 col-xl-2 d-flex">
                         <button className="btn btn-link px-2"
-                          onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                          onClick="this.parentNode.querySelector('input[type=number]').stepDown()">
                           <i className="fas fa-minus"></i>
                         </button>
   
@@ -72,7 +72,7 @@ const Cart = props => {
                           className="form-control form-control-sm" />
   
                         <button className="btn btn-link px-2"
-                          onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                          onClick="this.parentNode.querySelector('input[type=number]').stepUp()">
                           <i className="fas fa-plus"></i>
                         </button>
                       </div>
@@ -98,7 +98,7 @@ const Cart = props => {
                       </div>
                       <div className="col-md-3 col-lg-3 col-xl-2 d-flex">
                         <button className="btn btn-link px-2"
-                          onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                          onClick="this.parentNode.querySelector('input[type=number]').stepDown()">
                           <i className="fas fa-minus"></i>
                         </button>
   
@@ -106,7 +106,7 @@ const Cart = props => {
                           className="form-control form-control-sm" />
   
                         <button className="btn btn-link px-2"
-                          onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                          onClick="this.parentNode.querySelector('input[type=number]').stepUp()">
                           <i className="fas fa-plus"></i>
                         </button>
                       </div>
@@ -152,7 +152,7 @@ const Cart = props => {
                     <div className="mb-5">
                       <div className="form-outline">
                         <input type="text" id="form3Examplea2" className="form-control form-control-lg" />
-                        <label className="form-label" for="form3Examplea2">Enter your code</label>
+                        <label className="form-label" htmlFor="form3Examplea2">Enter your code</label>
                       </div>
                     </div>
   
