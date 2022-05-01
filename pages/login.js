@@ -27,7 +27,6 @@ const login = () => {
                         ></i>
                         <span className="h1 fw-bold mb-0">Logo</span>
                       </div>
-
                       <h5
                         className="fw-normal mb-3 pb-3"
                         style={{ letterSpacing: "1px" }}
