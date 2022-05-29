@@ -1,7 +1,60 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from 'axios'
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useRouter } from 'next/router'
 
 const Register = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password1, setPassword1] = useState("");
+  const [password2, setPassword2] = useState("");
+  const [terms, setTerms] = useState(true);
+  const router = useRouter()
+
+  const handleSubmit = () => {
+    console.log(name, email, password1, password2, terms);
+    
+    if (password1 !== password2) {
+      console.error("password not matched");
+    }
+    else if (!terms) {
+      console.error("please accept terms and conditions");
+    }
+    else if (name == "" || email == "" || password1 == "" || password2 == "") {
+      console.error("please fill all the fields");
+    }
+    else {
+      var data = JSON.stringify({
+        "email": email,
+        "password": password1,
+        "role": "user",
+        "name": name
+      });
+
+    
+    
+      var config = {
+        method: 'post',
+        url: 'http://127.0.0.1:8000/auth/register',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: data
+      };
+    
+      axios(config)
+        .then(function (response) {
+          console.log(JSON.stringify(response.data));
+          router.push("/");
+        })
+        .catch(function (error) {
+          console.log(error.response.data.detail);
+          alert(error.response.data.detail);
+        });
+    
+    }
+  }
+
   return (
     <div>
       <section className="vh-100" style={{ backgroundColor: "#eee" }}>
@@ -24,6 +77,8 @@ const Register = () => {
                               type="text"
                               id="form3Example1c"
                               className="form-control"
+                              value={name}
+                              onChange={e=> setName(e.target.value)}
                             />
                             <label
                               className="form-label"
@@ -41,6 +96,8 @@ const Register = () => {
                               type="email"
                               id="form3Example3c"
                               className="form-control"
+                              value={email}
+                              onChange={e=> setEmail(e.target.value)}
                             />
                             <label
                               className="form-label"
@@ -58,6 +115,8 @@ const Register = () => {
                               type="password"
                               id="form3Example4c"
                               className="form-control"
+                              value={password1}
+                              onChange={e=> setPassword1(e.target.value)}
                             />
                             <label
                               className="form-label"
@@ -75,6 +134,8 @@ const Register = () => {
                               type="password"
                               id="form3Example4cd"
                               className="form-control"
+                              value={password2}
+                              onChange={e=> setPassword2(e.target.value)}
                             />
                             <label
                               className="form-label"
@@ -89,8 +150,9 @@ const Register = () => {
                           <input
                             className="form-check-input me-2"
                             type="checkbox"
-                            value=""
                             id="form2Example3c"
+                            value= {terms}
+                            onChange={e=> setTerms(e.target.value)}
                           />
                           <label
                             className="form-check-label"
@@ -105,6 +167,7 @@ const Register = () => {
                           <button
                             type="button"
                             className="btn btn-primary btn-lg"
+                            onClick={handleSubmit}
                           >
                             Register
                           </button>

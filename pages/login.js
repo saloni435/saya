@@ -1,8 +1,59 @@
-import React from "react";
+import React,{ useState, useEffect} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useRouter } from 'next/router'
+import { useSession, signIn, signOut } from "next-auth/react"
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import Link from 'next/link';
+import { useUserContext } from "../context/user";
+
 
 const login = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [isLoginStarted, setIsLoginStarted] = useState(false)
+  const [loginError, setLoginError] = useState('')
+  const router = useRouter();
+  const { saveName, saveEmail, saveToken, saveIsAdmin } = useUserContext();
+
+
+  const handleLogin = () => {
+    setIsLoginStarted(true)
+    console.log("aditya");
+    var data = JSON.stringify({
+      "email": email,
+      "password": password
+    });
+
+    var config = {
+      method: 'post',
+      url: 'http://127.0.0.1:8000/auth/token',
+      headers: { 
+        'Content-Type': 'application/json'
+      },
+      data : data
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log("login sucessfully");
+        saveName(response.data.name);
+        saveEmail(email);
+        saveToken(response.data.access_token);
+        saveIsAdmin(response.data.isAdmin);
+        router.push("/");
+      console.log(JSON.stringify(response.data));
+    })
+      .catch(function (error) {
+        alert("enter valid credentials")
+        setIsLoginStarted(false)
+      console.log(error);
+    });
+    
+  }
+
   return (
+
     <section className="vh-100" style={{ backgroundColor: "#9A616D" }}>
       <div className="container py-5 h-100">
         <div className="row d-flex justify-content-center align-items-center h-100">
@@ -17,9 +68,10 @@ const login = () => {
                     style={{ borderRadius: "1rem 0 0 1rem" }}
                   />
                 </div>
+                
                 <div className="col-md-6 col-lg-7 d-flex align-items-center">
                   <div className="card-body p-4 p-lg-5 text-black">
-                    <form>
+                    <form >
                       <div className="d-flex align-items-center mb-3 pb-1">
                         <i
                           className="fas fa-cubes fa-2x me-3"
@@ -39,6 +91,9 @@ const login = () => {
                           type="email"
                           id="form2Example17"
                           className="form-control form-control-lg"
+                          value={email}
+                          onChange={e => setEmail(e.target.value)}
+                        
                         />
                         <label className="form-label" htmlFor="form2Example17">
                           Email address
@@ -50,6 +105,8 @@ const login = () => {
                           type="password"
                           id="form2Example27"
                           className="form-control form-control-lg"
+                          value={password}
+                          onChange={e=> setPassword(e.target.value)}
                         />
                         <label className="form-label" htmlFor="form2Example27">
                           Password
@@ -60,6 +117,8 @@ const login = () => {
                         <button
                           className="btn btn-dark btn-lg btn-block"
                           type="button"
+                          disabled={isLoginStarted}
+                          onClick={handleLogin}
                         >
                           Login
                         </button>
@@ -71,16 +130,16 @@ const login = () => {
                       <p className="mb-5 pb-lg-2" style={{ color: "#393f81" }}>
                         {" "}
                         Dont have an account?{" "}
-                        <a href="#!" style={{ color: "#393f81" }}>
+                        <Link href="/register" style={{ color: "#393f81" }}>
                           Register here
-                        </a>
+                        </Link>
                       </p>
-                      <a href="#!" className="small text-muted">
+                      <Link href="#!" className="small text-muted">
                         Terms of use.
-                      </a>
-                      <a href="#!" className="small text-muted">
+                      </Link>
+                      <Link href="#!" className="small text-muted">
                         Privacy policy
-                      </a>
+                      </Link>
                     </form>
                   </div>
                 </div>
@@ -88,6 +147,7 @@ const login = () => {
             </div>
           </div>
         </div>
+        
       </div>
     </section>
   );

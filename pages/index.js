@@ -5,8 +5,12 @@ import styles from '../styles/Home.module.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ProductList from './components/productList';
 import Navbar from './components/navbar';
+import { useUserContext } from "../context/user";
+
 export default function Home() {
-  const [cart,setCart]=useState([]);
+  const [cart, setCart] = useState([]);
+  const { name, isAdmin } = useUserContext();
+
   const updateCart=value=>{
     setCart(value);
   }

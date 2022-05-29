@@ -1,8 +1,43 @@
-import React from 'react';
+import React, { useEffect,useState } from 'react';
+import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.min.css";
+import Navbar from './components/navbar';
+import { useUserContext } from "../context/user";
+import { useRouter } from 'next/router'
 
 const Cart = props => {
+  const { token } = useUserContext();
+  const [cartItems, setCartItems] = useState([]);
+  const [totalCartItems, setTotalCartItems] = useState(0);
+  const router = useRouter();
+  useEffect(() => {
+    console.log("cart page",token);
+    if (token!="") {
+      var config = {
+        method: 'get',
+        url: 'http://127.0.0.1:8000/cart',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      };
+      
+      axios(config)
+        .then(function (response) {
+          setCartItems(response.data.list);
+          setTotalCartItems(response.data.length);
+          console.log(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+    else {
+      router.push("/login");
+    }
+  }, []);
   return (
+    <>
+      <Navbar />
     <section className="h-100 h-custom" style={{backgroundColor:"#d2c9ff"}}>
     <div className="container py-5 h-100">
       <div className="row d-flex justify-content-center align-items-center h-100">
@@ -14,7 +49,7 @@ const Cart = props => {
                   <div className="p-5">
                     <div className="d-flex justify-content-between align-items-center mb-5">
                       <h1 className="fw-bold mb-0 text-black">Shopping Cart</h1>
-                      <h6 className="mb-0 text-muted">3 items</h6>
+                      <h6 className="mb-0 text-muted">{totalCartItems} items</h6>
                     </div>
                     <hr className="my-4"/>
   
@@ -174,7 +209,8 @@ const Cart = props => {
         </div>
       </div>
     </div>
-  </section>
+      </section>
+      </>
   )
 }
 

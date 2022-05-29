@@ -1,9 +1,13 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react'
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Product = props => {
+  const addCart = () => {
+    
+  };
   return (
-        <div className="col-md-12 col-lg-4 mb-4 mb-lg-0" key={props.device.id}>
+        <div className="col-md-12 col-lg-4 mb-4 mb-lg-0">
         <div className="card">
           <div className="d-flex justify-content-between p-3">
             <p className="lead mb-0">Todays Combo Offer</p>
