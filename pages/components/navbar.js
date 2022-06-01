@@ -24,7 +24,7 @@ const Navbar = () => {
       {/* Container wrapper */}
       <div className="container">
         {/* Navbar brand */}
-        <a className="navbar-brand me-2" href="https://mdbgo.com/">
+        <Link className="navbar-brand me-2" href="/">
           <img
             src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp"
             height={16}
@@ -32,7 +32,7 @@ const Navbar = () => {
             loading="lazy"
             style={{ marginTop: "-1px" }}
           />
-        </a>
+        </Link>
         {/* Toggle button */}
         <button
           className="navbar-toggler"
@@ -53,7 +53,13 @@ const Navbar = () => {
               <Link className="nav-link" href="/cart">
                 cart
               </Link>
-            </li>
+              </li>
+              {isAdmin?(<li className="nav-item">
+              <Link className="nav-link" href="/add">
+                Add Product
+              </Link>
+            </li>):null}
+              
           </ul>
             {token === "" ? (
               <div className="d-flex align-items-center">

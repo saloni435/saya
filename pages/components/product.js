@@ -1,9 +1,43 @@
 /* eslint-disable @next/next/no-img-element */
 import React from 'react'
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useRouter } from 'next/router'
+import { useUserContext } from "../../context/user";
+import axios from 'axios';
 
 const Product = props => {
+  const { token } = useUserContext();
+  const router = useRouter();
+
   const addCart = () => {
+    if (token!="") {
+      var data = JSON.stringify({
+        "name": props.device.name,
+        "quantity": 1
+      });
+      var config = {
+        method: 'post',
+        url: 'http://127.0.0.1:8000/addcart',
+        headers: { 
+          'Content-Type': 'application/json', 
+          'Authorization': `Bearer ${token}`
+        },
+        data : data
+      };
+      
+      axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        router.push('/cart');
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    
+    }
+    else {
+      router.push("/login");
+    }
     
   };
   return (
@@ -40,9 +74,7 @@ const Product = props => {
                 <i className="fa fa-star"></i>
               </div>
               <div className="d-flex justify-content-between mb-2">
-                    <button type="button" className="btn btn-primary" onClick={()=>{
-
-                    }}>Add to Cart</button>
+                    <button type="button" className="btn btn-primary" onClick={addCart}>Add to Cart</button>
             </div>
             </div>
           </div>
