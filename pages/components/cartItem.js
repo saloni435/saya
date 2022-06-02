@@ -41,7 +41,7 @@ const CartItem = props => {
           });
           var config = {
             method: 'post',
-            url: 'http://127.0.0.1:8000/cart',
+            url: 'http://127.0.0.1:8000/updatecart',
             headers: { 
               'Content-Type': 'application/json', 
               'Authorization': `Bearer ${token}`

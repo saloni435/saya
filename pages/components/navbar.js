@@ -26,9 +26,9 @@ const Navbar = () => {
         {/* Navbar brand */}
         <Link className="navbar-brand me-2" href="/">
           <img
-            src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp"
-            height={16}
-            alt="MDB Logo"
+            src="/logo.png"
+            height={30}
+            alt="saya Logo"
             loading="lazy"
             style={{ marginTop: "-1px" }}
           />

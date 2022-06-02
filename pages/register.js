@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from 'axios'
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useRouter } from 'next/router'
+import { useUserContext } from "../context/user";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -10,18 +11,19 @@ const Register = () => {
   const [password2, setPassword2] = useState("");
   const [terms, setTerms] = useState(true);
   const router = useRouter()
+  const { saveName, saveEmail, saveToken, saveIsAdmin } = useUserContext();
 
   const handleSubmit = () => {
     console.log(name, email, password1, password2, terms);
     
     if (password1 !== password2) {
-      console.error("password not matched");
+      alert("password not matched");
     }
     else if (!terms) {
-      console.error("please accept terms and conditions");
+      alert("please accept terms and conditions");
     }
     else if (name == "" || email == "" || password1 == "" || password2 == "") {
-      console.error("please fill all the fields");
+      alert("please fill all the fields");
     }
     else {
       var data = JSON.stringify({
@@ -45,6 +47,10 @@ const Register = () => {
       axios(config)
         .then(function (response) {
           console.log(JSON.stringify(response.data));
+          saveName(name);
+        saveEmail(email);
+        saveToken(response.data.access_token);
+        saveIsAdmin(false);
           router.push("/");
         })
         .catch(function (error) {

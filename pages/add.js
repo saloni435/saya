@@ -1,13 +1,14 @@
-import React, { useEffect,useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from './components/navbar';
 import { useUserContext } from "../context/user";
 import { useRouter } from 'next/router'
-import CartItem from './components/cartItem';
-import Link from 'next/link';
+
 const Add = props => {
-  const { token } = useUserContext();
+  const { token, isAdmin } = useUserContext();
+  const router = useRouter();
+
     const [name, setName] = useState("");
     const [price, setPrice] = useState("");
     const [discount, setDiscount] = useState("");
@@ -16,35 +17,41 @@ const Add = props => {
     const [quantity, setQuantity] = useState("");
     const [brand, setBrand] = useState("");
 
-    const addProduct = () => {
-        var data = JSON.stringify({
-            "name": name,
-            "price": price,
-            "discount": discount,
-            "star": star,
-            "brand": brand,
-            "image": image,
-            "quantity": quantity
-          });
+  const addProduct = e => {
+    e.preventDefault();
+    if (token != "" && isAdmin) {
+      var data = JSON.stringify({
+        "name": name,
+        "price": price,
+        "discount": discount,
+        "star": star,
+        "brand": brand,
+        "image": image,
+        "quantity": quantity
+      });
           
-          var config = {
-            method: 'post',
-            url: 'http://127.0.0.1:8000/device',
-            headers: { 
-              'Content-Type': 'application/json', 
-              'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzYWxvbmlAZ21haWwuY29tIiwiZXhwIjoxNjUzODU2NjM4fQ.PyWPJ3G-77RQFpR6VTE30kdrb0ebabE-LaHFt-hPnTU'
-            },
-            data : data
-          };
+      var config = {
+        method: 'post',
+        url: 'http://127.0.0.1:8000/adddevice',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        data: data
+      };
           
-          axios(config)
-          .then(function (response) {
-            console.log(JSON.stringify(response.data));
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-          
+      axios(config)
+        .then(function (response) {
+          console.log(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+    else {
+      alert("please login as admin");
+      router.push("/login");
+    }
     }
 
 
@@ -61,7 +68,6 @@ const Add = props => {
                   <div className="col-md-3">
                     <div style={{ marginTop: 50, marginLeft: 10 }} className="text-center">
                       <i
-                        id="animationDemo"
                         data-mdb-animation="slide-right"
                         data-mdb-toggle="animation"
                         data-mdb-animation-reset="true"
@@ -71,7 +77,7 @@ const Add = props => {
                       />
                       <h3 className="mt-3 text-white">Welcome</h3>
                       <p className="white-text">
-                        You are 30 seconds away from compleating your order!
+                        Add Product!
                       </p>
                     </div>
                     <div className="text-center">
@@ -94,11 +100,10 @@ const Add = props => {
                               <div className="form-outline">
                                 <input
                                   type="text"
-                                  id="form9Example1"
                                       className="form-control input-custom"
                                       value={name}
                                       onChange={e => setName(e.target.value)}
-                                      placeholder="First Name"
+                                      placeholder="Enter product name"
                                 />
                                 <label className="form-label" htmlFor="form9Example1">
                                   Name
@@ -109,13 +114,13 @@ const Add = props => {
                               <div className="form-outline">
                                 <input
                                   type="text"
-                                  id="form9Example2"
                                       className="form-control input-custom"
                                       value={brand}
-                                      onChange={e => setBrand(e.target.value)}
+                                  onChange={e => setBrand(e.target.value)}
+                                  placeholder="Enter brand"
                                 />
                                 <label className="form-label" htmlFor="form9Example2">
-                                  brand
+                                  Brand
                                 </label>
                               </div>
                             </div>
@@ -124,25 +129,25 @@ const Add = props => {
                             <div className="col">
                               <div className="form-outline">
                                 <input
-                                  type="text"
-                                  id="form9Example3"
+                                  type="number"
                                       className="form-control input-custom"
                                       value={price}
-                                      onChange={e => setPrice(e.target.value)}
+                                  onChange={e => setPrice(e.target.value)}
+                                  placeholder="Enter price"
                                 />
                                 <label className="form-label" htmlFor="form9Example3">
-                                  price
+                                  Price
                                 </label>
                               </div>
                             </div>
                             <div className="col">
                               <div className="form-outline">
                                 <input
-                                  type="text"
-                                  id="form9Example4"
+                                  type="number"
                                       className="form-control input-custom"
                                       value={discount}
-                                      onChange={e => setDiscount(e.target.value)}
+                                  onChange={e => setDiscount(e.target.value)}
+                                  placeholder="Enter discount"
                                 />
                                 <label className="form-label" htmlFor="form9Example4">
                                   Discount
@@ -154,11 +159,13 @@ const Add = props => {
                             <div className="col">
                               <div className="form-outline">
                                 <input
-                                  type="text"
-                                  id="form9Example6"
+                                  type="number"
                                       className="form-control input-custom"
                                       value={star}
-                                      onChange={e => setStar(e.target.value)}
+                                  onChange={e => setStar(e.target.value)}
+                                  placeholder="Enter stars (1-5)"
+                                  min={1}
+                                  max={5}
                                 />
                                 <label className="form-label" htmlFor="form9Example6">
                                   Star
@@ -168,11 +175,11 @@ const Add = props => {
                             <div className="col">
                               <div className="form-outline">
                                 <input
-                                  type="email"
-                                  id="typeEmail"
+                                  type="number"
                                       className="form-control input-custom"
                                       value={quantity}
-                                      onChange={e => setQuantity(e.target.value)}
+                                  onChange={e => setQuantity(e.target.value)}
+                                  placeholder="Enter quantity"
                                 />
                                 <label className="form-label" htmlFor="typeEmail">
                                   Quantity
@@ -188,7 +195,8 @@ const Add = props => {
                                   id="form9Example6"
                                       className="form-control input-custom"
                                       value={image}
-                                      onChange={e => setImage(e.target.value)}
+                                  onChange={e => setImage(e.target.value)}
+                                  placeholder="Enter image link"
                                 />
                                 <label className="form-label" htmlFor="form9Example6">
                                   Image
