@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from './components/navbar';
@@ -17,6 +17,11 @@ const Add = props => {
     const [quantity, setQuantity] = useState("");
     const [brand, setBrand] = useState("");
 
+  useEffect(() => {
+    if (token === "" || isAdmin === false) {
+      router.push("/login");
+    }
+  }, [token, isAdmin]);
   const addProduct = e => {
     e.preventDefault();
     if (token != "" && isAdmin) {
@@ -42,10 +47,12 @@ const Add = props => {
           
       axios(config)
         .then(function (response) {
-          console.log(JSON.stringify(response.data));
+          alert("product added successfully");
+          router.push("/");
+
         })
         .catch(function (error) {
-          console.log(error);
+          alert(error.response.data.detail);
         });
     }
     else {
