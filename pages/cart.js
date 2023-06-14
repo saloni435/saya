@@ -156,14 +156,14 @@ const Cart = props => {
   
                     <div className="d-flex justify-content-between mb-4">
                           <h5 className="text-uppercase">items { totalCartItems}</h5>
-                          <h5>€ { totalCartPrice}</h5>
+                          <h5>₹ { totalCartPrice}</h5>
                     </div>
   
                     <h5 className="text-uppercase mb-3">Shipping</h5>
   
                     <div className="mb-4 pb-2">
                       <select className="select">
-                        <option value="1">Standard-Delivery- €40.00</option>
+                        <option value="1">Standard-Delivery- ₹40.00</option>
                       </select>
                     </div>
   
@@ -171,7 +171,7 @@ const Cart = props => {
   
                     <div className="d-flex justify-content-between mb-5">
                       <h5 className="text-uppercase">Total price</h5>
-                          <h5>€ { totalCartPrice+40}</h5>
+                          <h5>₹ { totalCartPrice+40}</h5>
                     </div>
   
                     <button type="button" className="btn btn-dark btn-block btn-lg"

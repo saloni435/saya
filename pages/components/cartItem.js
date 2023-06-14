@@ -88,7 +88,7 @@ const CartItem = props => {
                         </button>
                       </div>
                       <div className="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-              <h6 className="mb-0">€ {price*q }</h6>
+              <h6 className="mb-0">₹ {price*q }</h6>
                       </div>
                       <div className="col-md-1 col-lg-1 col-xl-1 text-end">
                         <button href="#!" className="text-muted" onClick={deleteCart}>delete</button>
